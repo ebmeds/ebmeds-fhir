@@ -1,2 +1,15 @@
-# ebmeds-fhir
-EBMeDS FHIR plug-in
+# EBMeDS FHIR
+
+### Installation
+
+With Administrator privileges
+
+    npm install
+
+### Run tests using Mocha
+
+    npm test
+
+### Start application
+
+    npm start
