@@ -1,6 +1,7 @@
 var express = require('express')
   , routes = require('./routes')
   , hello = require('./routes/hello')
+  , ebmeds = require('./routes/ebmeds')
   , http = require('http')
   , path = require('path');
 
@@ -21,6 +22,7 @@ if ('development' === app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/ebmeds', ebmeds.test);
 app.get('/hello', hello.msg);
 
 http.createServer(app).listen(app.get('port'), function() {
