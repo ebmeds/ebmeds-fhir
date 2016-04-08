@@ -12,6 +12,7 @@
     "test"
   ],
   "dependencies": {
+    "config": "1.20.0",
     "express": "3.2.6",
     "jade": "*",
     "request-promise": "2.0.1",

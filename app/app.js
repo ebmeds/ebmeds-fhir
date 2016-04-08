@@ -3,11 +3,12 @@ var express = require('express')
   , hello = require('./routes/hello')
   , ebmeds = require('./routes/ebmeds')
   , http = require('http')
+  , config = require('config')
   , path = require('path');
 
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', config.get('server.port'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
