@@ -1,7 +1,6 @@
 var express = require('express')
   , routes = require('./routes')
-  , hello = require('./routes/hello')
-  , ebmeds = require('./routes/ebmeds')
+  , api = require('./routes/api')
   , http = require('http')
   , config = require('config')
   , path = require('path');
@@ -23,8 +22,7 @@ if ('development' === app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/ebmeds', ebmeds.test);
-app.get('/hello', hello.msg);
+app.get('/api/health-coaching', api.healthCoaching);
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));

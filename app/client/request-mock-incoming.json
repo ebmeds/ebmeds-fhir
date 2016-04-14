@@ -1,0 +1,153 @@
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "activity",
+      "valueCoding": {
+        "system": "http://cds-hooks.smarthealthit.org/activity",
+        "code": "health-coaching"
+      }
+    },
+    {
+      "name": "activityInstance",
+      "valueString": "565a1dd3-71b2-4f75-8f55-692fcaaccbf6f"
+    },
+    {
+      "name": "user",
+      "valueString": "Patient/example"
+    },
+    {
+      "name": "patient",
+      "valueId": "example"
+    },
+    {
+      "name":"fhirServer",
+      "valueUri":"https://fhir-himss.cernerpowerchart.com/dstu2/nya9mWd9vqI_z1LcF5uLfCwewAGCVrY1"
+    },
+    {
+      "name": "redirect",
+      "valueString": "https://ehr.example.com/service-done.html"
+    },
+    {
+      "name": "context",
+      "resource": {
+        "patient": {"reference": "Patient/example"},
+        "resourceType": "Bundle",
+        "id": "fff79550-0fe3-4c70-9ad9-883298ef8b6c",
+        "entry": [
+          {
+            "fullUrl": "http://fhirsandbox.kanta.fi/kanta-phr-sandbox/baseDstu2/Patient/123456",
+            "resource": {
+              "resourceType": "Patient",
+              "id": "example",
+              "gender": "male",
+              "birthDate": "1970-01-01"
+            }
+          },
+          {
+            "fullUrl": "http://fhirsandbox.kanta.fi/kanta-phr-sandbox/baseDstu2/Observation/3578",
+            "resource": {
+              "resourceType": "Observation",
+              "id": "3578",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "55284-4",
+                    "display": "Blood pressure systolic & diastolic"
+                  }
+                ]
+              },
+              "subject": {
+                "reference": "Patient/example"
+              },
+              "effectiveDateTime": "2012-09-17",
+              "component": [
+                {
+                  "code": {
+                    "coding": [
+                      {
+                        "system": "http://loinc.org",
+                        "code": "8480-6",
+                        "display": "Systolic blood pressure"
+                      }
+                    ]
+                  },
+                  "valueQuantity": {
+                    "value": 107,
+                    "unit": "mm[Hg]"
+                  }
+                },
+                {
+                  "code": {
+                    "coding": [
+                      {
+                        "system": "http://loinc.org",
+                        "code": "8462-4",
+                        "display": "Diastolic blood pressure"
+                      }
+                    ]
+                  },
+                  "valueQuantity": {
+                    "value": 60,
+                    "unit": "mm[Hg]"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl": "http://fhirsandbox.kanta.fi/kanta-phr-sandbox/baseDstu2/Observation/767",
+            "resource": {
+              "resourceType": "Observation",
+              "id": "767",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "29463-7",
+                    "display": "Weight"
+                  }
+                ]
+              },
+              "subject": {
+                "reference": "Patient/example"
+              },
+              "valueQuantity": {
+                "value": 79,
+                "unit": "kg",
+                "system": "http://unitsofmeasure.org"
+              },
+              "effectiveDateTime": "2012-09-17"
+            }
+          },
+          {
+            "fullUrl": "http://fhirsandbox.kanta.fi/kanta-phr-sandbox/baseDstu2/Observation/767",
+            "resource": {
+              "resourceType": "Observation",
+              "id": "767",
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "8302-2",
+                    "display": "Height"
+                  }
+                ]
+              },
+              "subject": {
+                "reference": "Patient/example"
+              },
+              "valueQuantity": {
+                "value": 175,
+                "unit": "cm",
+                "system": "http://unitsofmeasure.org"
+              },
+              "effectiveDateTime": "2012-09-17"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

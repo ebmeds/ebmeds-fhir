@@ -1,0 +1,12 @@
+{
+  "CodeValue": "code",
+  "CodeSystem": "1.2.246.537.6.96",
+  "PointStamp": {
+    "PointDate": "date"
+  },
+  "Result": {
+    "Value": "value",
+    "Unit": "unit"
+  },
+  "MeasurementName": "name"
+}

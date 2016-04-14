@@ -1,0 +1,25 @@
+{
+  "fullUrl": "http://fhirsandbox.kanta.fi/kanta-phr-sandbox/baseDstu2/Observation/767",
+  "resource": {
+    "resourceType": "Observation",
+    "id": "767",
+    "code": {
+      "coding": [
+        {
+          "system": "http://loinc.org",
+          "code": "code",
+          "display": "name"
+        }
+      ]
+    },
+    "subject": {
+      "reference": "Patient/example"
+    },
+    "valueQuantity": {
+      "value": "value",
+      "unit": "unit",
+      "system": "http://unitsofmeasure.org"
+    },
+    "effectiveDateTime": "date"
+  }
+}
