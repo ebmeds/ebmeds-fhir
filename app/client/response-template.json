@@ -1,0 +1,48 @@
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "card",
+      "part": [
+        {
+          "name": "summary",
+          "valueString": "FINRISK calculator"
+        },
+        {
+          "name": "detail",
+          "valueString": "With the FINRISK calculator you can calculate your risk of acute myocardial infarction or acute disorder of the cerebral circulation within the next ten years. The calculator gives your disease risk as a percentage."
+        },
+        {
+          "name": "source",
+          "part": [
+            {
+              "name": "label",
+              "valueString": "FINRISK calculator - Instructions and interpretation"
+            },
+            {
+              "name": "url",
+              "valueUri": "https://www.thl.fi/en/web/chronic-diseases/cardiovascular-diseases/finrisk-calculator/instructions"
+            }
+          ]
+        },
+        {
+          "name": "indicator",
+          "valueCode": "info"
+        },
+        {
+          "name": "link",
+          "part": [
+            {
+              "name": "label",
+              "valueString": "FINRISK calculator"
+            },
+            {
+              "name": "url",
+              "valueUri": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
