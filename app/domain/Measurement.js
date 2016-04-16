@@ -3,7 +3,7 @@ var Measurement = {
     create: function(code, date, value, unit, name) {
         return {
             "CodeValue": code,
-            "CodeSystem": "1.2.246.537.6.96",
+            "CodeSystem": "2.16.840.1.113883.6.1",
             "PointStamp": {
                 "PointDate": date
             },
