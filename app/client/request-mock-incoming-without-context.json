@@ -1,0 +1,32 @@
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "activity",
+      "valueCoding": {
+        "system": "http://cds-hooks.smarthealthit.org/activity",
+        "code": "health-coaching"
+      }
+    },
+    {
+      "name": "activityInstance",
+      "valueString": "565a1dd3-71b2-4f75-8f55-692fcaaccbf6f"
+    },
+    {
+      "name": "user",
+      "valueString": "Patient/example"
+    },
+    {
+      "name": "patient",
+      "valueId": "4154007"
+    },
+    {
+      "name":"fhirServer",
+      "valueUri":"https://fhir-open.sandboxcernerpowerchart.com/dstu2/d075cf8b-3261-481d-97e5-ba6c48d3b41f"
+    },
+    {
+      "name": "redirect",
+      "valueString": "https://ehr.example.com/service-done.html"
+    }
+  ]
+}

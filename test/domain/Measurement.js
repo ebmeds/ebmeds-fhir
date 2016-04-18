@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var Measurement = require("../../app/domain/Measurement");
+var Measurement = require("../../app/domain/ebmeds/Measurement");
 
 describe("Measurement", function() {
 

@@ -18,11 +18,11 @@
     },
     {
       "name": "patient",
-      "valueId": "example"
+      "valueId": "4154007"
     },
     {
       "name":"fhirServer",
-      "valueUri":"https://fhir-himss.cernerpowerchart.com/dstu2/nya9mWd9vqI_z1LcF5uLfCwewAGCVrY1"
+      "valueUri":"https://fhir-open.sandboxcernerpowerchart.com/dstu2/d075cf8b-3261-481d-97e5-ba6c48d3b41f"
     },
     {
       "name": "redirect",
