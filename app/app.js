@@ -17,8 +17,11 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-if ('development' === app.get('env')) {
-    app.use(express.errorHandler());
+if ('production' ===  process.env.NODE_ENV) {
+    app.use(function(err, req, res, next) {
+        console.error(err.stack);
+        res.status(500).send(err.message ? err.message : "Unknown error occurred");
+    });
 }
 
 app.get('/', routes.index);
