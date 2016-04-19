@@ -1,11 +1,15 @@
 var Measurement = {
     
     create: function(code, date, value, unit, name) {
+
+        var parsedDate = date.split("T");
+
         return {
             "CodeValue": code,
             "CodeSystem": "2.16.840.1.113883.6.1",
             "PointStamp": {
-                "PointDate": date
+                "PointDate": parsedDate[0],
+                "PointTime": parsedDate.length > 1 ? parsedDate[1] : null
             },
             "Result": {
                 "Value": value,

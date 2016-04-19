@@ -2,7 +2,8 @@
   "CodeValue": "code",
   "CodeSystem": "2.16.840.1.113883.6.1",
   "PointStamp": {
-    "PointDate": "date"
+    "PointDate": "2016-02-19",
+    "PointTime": "07:30:00+03:00"
   },
   "Result": {
     "Value": "value",
