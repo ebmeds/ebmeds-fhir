@@ -1,12 +1,12 @@
 var expect = require("chai").expect;
-var parametersParser = require("../../app/domain/fhir/request-parser");
+var transformer = require("../../app/transformers/fhir-request-to-fhir-data");
 
-describe("Parameters parsing", function() {
+describe("Transform FHIR request to FHIR data", function() {
 
-    it("parse all parameters succeeds", function() {
+    it("getParameters succeeds", function() {
 
-        var expectedParameters = require("./parameters.json");
-        var actualParameters = parametersParser.parse(expectedParameters);
+        var expectedParameters = require("./fhir-request.json");
+        var actualParameters = transformer._getParameters(expectedParameters);
 
         expect("565a1dd3-71b2-4f75-8f55-692fcaaccbf6f").to.equal(actualParameters.activityInstance);
         expect("Patient/example").to.equal(actualParameters.context.patient.reference);
