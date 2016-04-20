@@ -16,4 +16,4 @@ With Administrator privileges
 
 ### Start application in production mode
 
-    export NODE_ENV=production && node app.js
+    project_root>export NODE_ENV=production && export NODE_CONFIG_DIR=../config && node app.js
