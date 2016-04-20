@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var parametersParser = require("../../app/domain/fhir/parameters-parser");
+var parametersParser = require("../../app/domain/fhir/request-parser");
 
 describe("Parameters parsing", function() {
 

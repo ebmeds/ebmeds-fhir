@@ -17,12 +17,17 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-if ('production' ===  process.env.NODE_ENV) {
+app.configure('production', function() {
     app.use(function(err, req, res, next) {
         console.error(err.stack);
         res.status(500).send(err.message ? err.message : "Unknown error occurred");
     });
-}
+});
+
+app.configure('development', function() {
+    app.use(express.errorHandler());
+    app.locals.pretty = true;
+});
 
 app.get('/', routes.index);
 app.get('/api/health-coaching', api.healthCoaching);
