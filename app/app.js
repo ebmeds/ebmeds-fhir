@@ -1,33 +1,22 @@
-var express = require('express')
-  , routes = require('./routes')
-  , api = require('./routes/api')
-  , http = require('http')
-  , config = require('config')
-  , path = require('path');
-
+var express = require('express');
+var routes = require('./routes');
+var api = require('./routes/api');
+var http = require('http');
+var config = require('config');
+var path = require('path');
 var app = express();
 
 app.set('port', config.get('server.port'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
-app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.configure('production', function() {
-    app.use(function(err, req, res, next) {
-        console.error(err.stack);
-        res.status(500).send(err.message ? err.message : "Unknown error occurred");
-    });
-});
-
-app.configure('development', function() {
-    app.use(express.errorHandler());
-    app.locals.pretty = true;
-});
+app.configure('production', function() { require('./production-configure')(app); });
+app.configure('development', function() { require('./development-configure')(app); });
 
 app.get('/', routes.index);
 app.post('/api/health-coaching', api.healthCoaching);
