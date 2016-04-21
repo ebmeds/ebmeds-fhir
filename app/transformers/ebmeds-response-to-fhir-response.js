@@ -79,7 +79,7 @@ var service = {
     _mapReminderLevel: function(reminderLevel) {
         switch (reminderLevel) {
             case "0": return "info";
-            case "1": return "FIXME";
+            case "1": return "warning";
             case "2": return "hard-stop";
             default: return "unknown " + "(" + reminderLevel + ")";
         }
