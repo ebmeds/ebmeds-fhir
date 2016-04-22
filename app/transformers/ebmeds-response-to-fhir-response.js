@@ -1,4 +1,3 @@
-var config = require('config');
 var jp = require('jsonpath');
 var Card = require('../domain/cds/Card');
 
@@ -54,17 +53,7 @@ var service = {
 
     _createFinriskLink: function(ebmedsResponse) {
 
-        var FinriskLink = config.get('finrisk.url');
-
-        //Parsing result from EBMeDS engine, finding Finrisk Link from JSON Response
-        var formAssistantLinks = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="FormAssistantLinks")]')[0];
-        var dataSetText = jp.query(formAssistantLinks, '$..DataSetText')[0];
-
-        //Getting just the link to Finrisk from the DataSetText
-        var finriskLink = JSON.stringify(dataSetText);
-        finriskLink = finriskLink.split(FinriskLink).pop();
-        finriskLink = finriskLink.split("'")[0];
-        finriskLink = FinriskLink + finriskLink;
+        var finriskDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="calculatorFinrisk")]')[0];
 
         return Card.create({
             summary: "FINRISK calculator",
@@ -72,7 +61,7 @@ var service = {
             sourceLabel: "FINRISK calculator - Instructions and interpretation",
             sourceUrl: "https://www.thl.fi/en/web/chronic-diseases/cardiovascular-diseases/finrisk-calculator/instructions",
             indicator: "info",
-            links: [{ label: "FINRISK calculator", url: finriskLink }]
+            links: [{ label: "FINRISK calculator", url: finriskDataset.DataSetText[0] }]
         });
     },
 
