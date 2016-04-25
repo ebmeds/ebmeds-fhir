@@ -1,8 +1,9 @@
 var Measurement = require('./Measurement');
+var Diagnosis = require('./Diagnosis');
 
 var Patient = {
     
-    create: function(patient, observations) {
+    create: function(patient, observations, conditions) {
 
         var birth = patient.birthDate.split("-");
 
@@ -35,15 +36,7 @@ var Patient = {
             },
             "Problems": {
                 "Diagnoses": {
-                    "Diagnosis": {
-                        "CodeValue": "E10",
-                        "CodeSystem": "1.2.246.537.6.1",
-                        "CodeSystemVersion": {},
-                        "StartStamp": {
-                            "StartDate": "2016-04-05"
-                        },
-                        "DiagnosisName": "Diabetes 1 tyyppi"
-                    }
+                    "Diagnosis": Diagnosis.mapConditions(conditions, [])
                 }
             }
         };

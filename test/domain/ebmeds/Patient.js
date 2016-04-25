@@ -12,7 +12,7 @@ describe("Patient", function() {
             "birthDate": "1970-09-31"
         };
 
-        var actual = Patient.create(expected, []);
+        var actual = Patient.create(expected, [], []);
 
         expect("example").to.equal(actual.PatientID);
         expect("1970").to.equal(actual.Properties.BirthTimeStamp.Year);

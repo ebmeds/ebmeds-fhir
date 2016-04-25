@@ -6,7 +6,12 @@ var service = {
 
     toEbmedsRequest: function(fhirData) {
 
-        ebmedsRequestTemplate.DSSRequest.Patient = Patient.create(fhirData.patient, fhirData.observations);
+        ebmedsRequestTemplate.DSSRequest.Patient = Patient.create(
+            fhirData.patient,
+            fhirData.observations,
+            fhirData.conditions
+        );
+
         ebmedsRequestTemplate.DSSRequest.System.Application.QueryID = fhirData.activityInstance;
 
         return new xml2js.Builder().buildObject(ebmedsRequestTemplate);

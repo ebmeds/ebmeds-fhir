@@ -8,11 +8,16 @@ var service = {
 
         var parameters = service._getParameters(fhirRequest);
 
-        return Promise.all([service._getPatient(parameters), service._getObservations(parameters)]).spread(function(patient, observations) {
+        return Promise.all([
+            service._getPatient(parameters),
+            service._getResources("Observation", parameters),
+            service._getResources("Condition", parameters)])
+            .spread(function(patient, observations, conditions) {
             return {
                 activityInstance: parameters.activityInstance,
                 patient: patient,
-                observations: observations
+                observations: observations,
+                conditions: conditions
             };
         });
     },
@@ -51,19 +56,19 @@ var service = {
         throw new Error("Parameters missing context and patient/fhirServer");
     },
 
-    _getObservations: function(parameters) {
+    _getResources: function(resourceType, parameters) {
 
         if (parameters.context) {
 
             return new Promise(function(resolve, reject) {
-                resolve(jp.query(parameters.context, '$..entry[?(@.resource.resourceType=="Observation")].resource'));
+                resolve(jp.query(parameters.context, '$..entry[?(@.resource.resourceType=="' + resourceType + '")].resource'));
             });
 
         } else if (parameters.patient && parameters.fhirServer) {
 
             var client = fhirClient({ baseUrl: parameters.fhirServer });
 
-            return client.search({ type: "Observation", query: { patient: parameters.patient } }).then(function(response) {
+            return client.search({ type: resourceType, query: { patient: parameters.patient } }).then(function(response) {
                 return jp.query(response.data, '$..entry[*].resource');
             });
         }
