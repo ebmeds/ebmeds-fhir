@@ -10,8 +10,14 @@ var service = {
 
             ebmedsClient.request(ebmedsRequest).then(function(ebmedsResponse) {
                 xml2js.parseString(ebmedsResponse, { explicitArray: true }, function(err, ebmedsJsonResponse) {
-                    resolve(ebmedsJsonResponse);
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(ebmedsJsonResponse);
+                    }
                 });
+            }).catch(function(err) {
+                reject(err);
             });
         });
     }

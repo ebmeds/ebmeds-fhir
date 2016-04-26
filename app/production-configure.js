@@ -18,6 +18,6 @@ module.exports = function(app) {
 
     app.use(function(err, req, res, next) {
         logger.error(err);
-        res.status(500).json(OperationOutcome.create("fatal", err.message));
+        res.status(500).json(OperationOutcome.create([{ severity: "fatal", code: "exception", diagnostics: err.message }]));
     });
 };

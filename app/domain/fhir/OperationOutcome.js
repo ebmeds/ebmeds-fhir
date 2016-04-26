@@ -1,14 +1,10 @@
 var OperationOutcome = {
     
-    create: function(severity, code, diagnostics) {
+    create: function(issues) {
 
         var operationOutcome = {
             "resourceType" : "OperationOutcome",
-            "issue" : [{
-                "severity" : severity,
-                "code" : code,
-                "diagnostics" : diagnostics
-            }]
+            "issue" : issues
         };
 
         return operationOutcome;

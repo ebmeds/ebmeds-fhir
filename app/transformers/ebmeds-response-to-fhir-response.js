@@ -1,5 +1,6 @@
 var jp = require('jsonpath');
 var Card = require('../domain/cds/Card');
+var OperationOutcome = require('../domain/fhir/OperationOutcome');
 
 var service = {
 
@@ -8,6 +9,18 @@ var service = {
     },
 
     _createResponse: function(ebmedsResponse) {
+
+        var exceptions = jp.query(ebmedsResponse, '$..Exceptions[*].Exception[*]');
+
+        if (exceptions.length > 0) {
+            return OperationOutcome.create(exceptions.map(function(exception) {
+                return {
+                    severity: "error",
+                    code: "exception",
+                    diagnostics: exception
+                };
+            }));
+        }
 
         var cards = service._createReminders(ebmedsResponse);
         cards.push(service._createGuidelink(ebmedsResponse));
