@@ -18,6 +18,7 @@
     "fhir.js": "0.0.9",
     "jade": "*",
     "jsonpath": "0.2.2",
+    "moment": "2.13.0",
     "promise-pipe": "0.1.8",
     "request-promise": "2.0.1",
     "winston": "2.2.0",

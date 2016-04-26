@@ -1,15 +1,17 @@
+var moment = require('moment');
+
 var Measurement = {
     
     create: function(code, date, value, unit, name) {
 
-        var parsedDate = date.split("T");
+        var parsedDate = moment(date);
 
         return {
             "CodeValue": code,
             "CodeSystem": "2.16.840.1.113883.6.1",
             "PointStamp": {
-                "PointDate": parsedDate[0],
-                "PointTime": parsedDate.length > 1 ? parsedDate[1] : null
+                "PointDate": parsedDate.format("YYYY-MM-DD"),
+                "PointTime": parsedDate.format("HH:mm:ss")
             },
             "Result": {
                 "Value": value,
@@ -36,6 +38,7 @@ var Measurement = {
             if (observation.component) {
                 Measurement.mapObservations(observation.component, measurements, observation);
             }
+            // FIXME Quantity should not be mandatory
             // Require code and quantity information for single observation, otherwise skip
             if (observation.code && observation.code.coding && observation.valueQuantity) {
                 measurements.push(Measurement.mapObservation(observation, parent));
