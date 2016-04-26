@@ -1,6 +1,7 @@
 var jp = require('jsonpath');
 var Card = require('../domain/cds/Card');
 var OperationOutcome = require('../domain/fhir/OperationOutcome');
+var Parameters = require('../domain/fhir/Parameters');
 
 var service = {
 
@@ -26,10 +27,7 @@ var service = {
         cards.push(service._createGuidelink(ebmedsResponse));
         cards.push(service._createFinriskLink(ebmedsResponse));
 
-        return {
-            resourceType: "Parameters",
-            parameter: cards
-        };
+        return Parameters.create(cards);
     },
 
     _createReminders: function(ebmedsResponse) {
@@ -38,8 +36,9 @@ var service = {
         
         return reminders.map(function(reminder) {
             return Card.create({
-                summary: reminder.ReminderShort[0],
-                detail: reminder.ReminderLong[0],
+                // FIXME Reminder tekstin valintalogiikka
+                summary: reminder.ReminderShort[0] ? reminder.ReminderShort[0] : reminder.ReminderPatient[0],
+                detail: reminder.ReminderLong[0] ? reminder.ReminderLong[0] : reminder.ReminderPatient[0],
                 sourceLabel: reminder.ScriptID[0],
                 sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=fi",
                 indicator: service._mapReminderLevel(reminder.ReminderLevel[0]),
