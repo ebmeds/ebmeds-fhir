@@ -11,6 +11,7 @@ var service = {
 
     _createResponse: function(ebmedsResponse) {
 
+        /* FIXME Only fatal errors
         var exceptions = jp.query(ebmedsResponse, '$..Exceptions[*].Exception[*]');
 
         if (exceptions.length > 0) {
@@ -22,6 +23,7 @@ var service = {
                 };
             }));
         }
+        */
 
         var cards = service._createReminders(ebmedsResponse);
         cards.push(service._createGuidelink(ebmedsResponse));
