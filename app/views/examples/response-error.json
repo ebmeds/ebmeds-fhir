@@ -1,0 +1,10 @@
+{
+  "resourceType": "OperationOutcome",
+  "issue": [
+    {
+      "severity": "error",
+      "code": "exception",
+      "diagnostics": "INTERNAL ERROR - EXECUTION FAILED: Script scr00654, Error, NumIvl construction: Invalid interval"
+    }
+  ]
+}

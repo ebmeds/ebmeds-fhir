@@ -5,25 +5,27 @@ var Parameters = require('../domain/fhir/Parameters');
 
 var service = {
 
-    toFhirResponse: function(ebmedsResponse) {
-        return service._createResponse(ebmedsResponse);
+    toFhirResponse: function(ebmedsResponse, context) {
+
+        if (context.requestParams.debug) {
+
+            var exceptions = jp.query(ebmedsResponse, '$..Exceptions[*].Exception[*]');
+
+            if (exceptions.length > 0) {
+                return OperationOutcome.create(exceptions.map(function(exception) {
+                    return {
+                        severity: "error",
+                        code: "exception",
+                        diagnostics: exception
+                    };
+                }));
+            }
+        }
+
+        return service._createResponse(ebmedsResponse, context);
     },
 
-    _createResponse: function(ebmedsResponse) {
-
-        /* FIXME Only fatal errors
-        var exceptions = jp.query(ebmedsResponse, '$..Exceptions[*].Exception[*]');
-
-        if (exceptions.length > 0) {
-            return OperationOutcome.create(exceptions.map(function(exception) {
-                return {
-                    severity: "error",
-                    code: "exception",
-                    diagnostics: exception
-                };
-            }));
-        }
-        */
+    _createResponse: function(ebmedsResponse, context) {
 
         var cards = service._createReminders(ebmedsResponse);
         cards.push(service._createGuidelink(ebmedsResponse));
@@ -35,7 +37,7 @@ var service = {
     _createReminders: function(ebmedsResponse) {
 
         var reminders = jp.query(ebmedsResponse, '$..Reminders[*].Reminder[*]');
-        
+
         return reminders.map(function(reminder) {
             return Card.create({
                 // FIXME Reminder tekstin valintalogiikka
@@ -81,12 +83,16 @@ var service = {
 
     _mapReminderLevel: function(reminderLevel) {
         switch (reminderLevel) {
-            case "0": return "info";
-            case "1": return "warning";
-            case "2": return "hard-stop";
-            default: return "unknown " + "(" + reminderLevel + ")";
+            case "0":
+                return "info";
+            case "1":
+                return "warning";
+            case "2":
+                return "hard-stop";
+            default:
+                return "unknown " + "(" + reminderLevel + ")";
         }
     }
 };
 
-module.exports =  service;
+module.exports = service;

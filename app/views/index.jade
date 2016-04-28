@@ -4,7 +4,16 @@ block content
   h1 EBMeDS FHIR plugin
   p API version #{version}
 
-  h2 Methods
+  h2 Debug mode
+
+  i e.g. POST /api/health-coaching?debug=true
+  p Returns OperationOutcome resource if EBMeDS response has errors or warnings, otherwise returns the actual Parameters resource
+
+  h3 Response example
+
+  pre #{response}
+
+  h2 API Methods
 
   i POST /api/health-coaching
 

@@ -6,6 +6,10 @@ var transformEbmedsResponse = require('../transformers/ebmeds-response-to-fhir-r
 
 exports.healthCoaching = function(req, res, next) {
 
+    var context = {
+        requestParams: req.query || {}
+    };
+
     var pipe = new PromisePipe()
         .then(transformFhirRequest.toFhirData)
         .then(transformFhirData.toEbmedsRequest)
@@ -15,7 +19,7 @@ exports.healthCoaching = function(req, res, next) {
             next(error);
         });
 
-    pipe(req.body).then(function(fhirResponse) {
+    pipe(req.body, context).then(function(fhirResponse) {
         res.json(fhirResponse);
     });
 };
