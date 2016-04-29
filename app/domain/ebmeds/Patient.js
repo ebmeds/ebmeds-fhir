@@ -1,5 +1,6 @@
 var Measurement = require('./Measurement');
 var Diagnosis = require('./Diagnosis');
+var SmokingStatus = require('./SmokingStatus');
 
 var Patient = {
     
@@ -24,9 +25,7 @@ var Patient = {
             },
             "Risks": {
                 "DrugsToAvoid": {},
-                "Smoking": {
-                    "SmokingStatus": "-1"
-                },
+                "Smoking": SmokingStatus.parse(observations),
                 "Pregnancy": {
                     "Pregnant": "0"
                 },
