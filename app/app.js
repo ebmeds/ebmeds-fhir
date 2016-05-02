@@ -20,10 +20,9 @@ app.configure('production', function() { require('./production-configure')(app);
 app.configure('development', function() { require('./development-configure')(app); });
 
 app.options('*', cors());
-app.use(cors());
 
 app.get('/', routes.index);
-app.post('/api/health-coaching', api.healthCoaching);
+app.post('/api/health-coaching', cors(), api.healthCoaching);
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
