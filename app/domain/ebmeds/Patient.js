@@ -1,3 +1,4 @@
+var moment = require('moment');
 var Measurement = require('./Measurement');
 var Diagnosis = require('./Diagnosis');
 var SmokingStatus = require('./SmokingStatus');
@@ -6,15 +7,15 @@ var Patient = {
     
     create: function(patient, observations, conditions) {
 
-        var birth = patient.birthDate.split("-");
+        var parsedBirthDate = moment(patient.birthDate);
 
         return {
             "PatientID": patient.id,
             "Properties": {
                 "BirthTimeStamp": {
-                    "Year": birth[0],
-                    "Month": birth[1],
-                    "Day": birth[2]
+                    "Year": parsedBirthDate.format("YYYY"),
+                    "Month": parsedBirthDate.format("MM"),
+                    "Day": parsedBirthDate.format("DD")
                 },
                 "Gender": patient.gender === "male" ? "M" : "F"
             },
