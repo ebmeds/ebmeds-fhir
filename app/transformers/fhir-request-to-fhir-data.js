@@ -15,6 +15,7 @@ var service = {
             .spread(function(patient, observations, conditions) {
             return {
                 activityInstance: parameters.activityInstance,
+                user: parameters.user,
                 patient: patient,
                 observations: observations,
                 conditions: conditions
@@ -25,6 +26,7 @@ var service = {
     _getParameters: function(fhirRequest) {
         return {
             activityInstance: service._getParameter(fhirRequest, "activityInstance", "valueString"),
+            user: service._getParameter(fhirRequest, "user", "valueString"),
             context: service._getParameter(fhirRequest, "context", "resource"),
             patient: service._getParameter(fhirRequest, "patient", "valueId"),
             fhirServer: service._getParameter(fhirRequest, "fhirServer", "valueUri")

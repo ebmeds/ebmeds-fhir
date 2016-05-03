@@ -1,20 +1,19 @@
 var xml2js = require('xml2js');
 var Patient = require('../domain/ebmeds/Patient');
-var ebmedsRequestTemplate = require('./ebmeds-request-template.json');
+var System = require('../domain/ebmeds/System');
 
 var service = {
 
     toEbmedsRequest: function(fhirData) {
 
-        ebmedsRequestTemplate.DSSRequest.Patient = Patient.create(
-            fhirData.patient,
-            fhirData.observations,
-            fhirData.conditions
-        );
+        var request = {
+            "DSSRequest": {
+                "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions),
+                "System": System.create(fhirData.activityInstance, fhirData.user)
+            }
+        };
 
-        ebmedsRequestTemplate.DSSRequest.System.Application.QueryID = fhirData.activityInstance;
-
-        return new xml2js.Builder().buildObject(ebmedsRequestTemplate);
+        return new xml2js.Builder().buildObject(request);
     }
 };
 
