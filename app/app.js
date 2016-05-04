@@ -5,7 +5,7 @@ var http = require('http');
 var config = require('config');
 var path = require('path');
 var cors = require('cors');
-var bodyParser = require('body-parser-json');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.set('port', config.get('server.port'));
