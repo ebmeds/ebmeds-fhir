@@ -5,7 +5,7 @@ var Parameters = require('../domain/fhir/Parameters');
 
 var service = {
 
-    toFhirResponse: function(ebmedsResponse, context) {
+    transform: function(ebmedsResponse, context) {
 
         if (context.requestParams.debug) {
 
@@ -101,4 +101,4 @@ var service = {
     }
 };
 
-module.exports = service;
+module.exports = service.transform;

@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 
 var service = {
 
-    toFhirData: function(fhirRequest) {
+    transform: function(fhirRequest) {
 
         var parameters = service._getParameters(fhirRequest);
 
@@ -79,4 +79,4 @@ var service = {
     }
 };
 
-module.exports =  service;
+module.exports =  service.transform;

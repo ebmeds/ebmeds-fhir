@@ -4,7 +4,7 @@ var System = require('../domain/ebmeds/System');
 
 var service = {
 
-    toEbmedsRequest: function(fhirData, context) {
+    transform: function(fhirData, context) {
 
         var request = {
             "DSSRequest": {
@@ -17,4 +17,4 @@ var service = {
     }
 };
 
-module.exports =  service;
+module.exports =  service.transform;

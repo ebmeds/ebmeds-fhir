@@ -4,7 +4,7 @@ var ebmedsClient = require('../client/ebmeds-client.js');
 
 var service = {
 
-    toEbmedsResponse: function(ebmedsRequest) {
+    transform: function(ebmedsRequest) {
 
         return new Promise(function(resolve, reject) {
 
@@ -23,4 +23,4 @@ var service = {
     }
 };
 
-module.exports =  service;
+module.exports =  service.transform;

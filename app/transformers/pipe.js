@@ -1,16 +1,16 @@
 var PromisePipe = require('promise-pipe')();
-var transformFhirRequest = require('./fhir-request-to-fhir-data');
-var transformFhirData = require('./fhir-data-to-ebmeds-request');
-var transformEbmedsRequest = require('./ebmeds-request-to-ebmeds-response');
-var transformEbmedsResponse = require('./ebmeds-response-to-fhir-response');
+var fhirRequest2FhirData = require('./fhir-request-to-fhir-data');
+var fhirData2EbmedsRequest = require('./fhir-data-to-ebmeds-request');
+var ebmedsRequest2EbmedsResponse = require('./ebmeds-request-to-ebmeds-response');
+var ebmedsResponse2FhirResponse = require('./ebmeds-response-to-fhir-response');
 
 exports.execute = function(req, res, next, context) {
 
     var pipe = new PromisePipe()
-        .then(transformFhirRequest.toFhirData)
-        .then(transformFhirData.toEbmedsRequest)
-        .then(transformEbmedsRequest.toEbmedsResponse)
-        .then(transformEbmedsResponse.toFhirResponse)
+        .then(fhirRequest2FhirData)
+        .then(fhirData2EbmedsRequest)
+        .then(ebmedsRequest2EbmedsResponse)
+        .then(ebmedsResponse2FhirResponse)
         .catch(function(error) {
             next(error);
         });
