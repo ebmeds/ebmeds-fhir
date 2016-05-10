@@ -4,25 +4,37 @@ block content
   h1 EBMeDS FHIR plugin
   p API version #{version}
 
+  h2 CDS Hooks
+
+  h3 Health coaching
+
+  pre Content-Type: application/json+fhir; charset=utf-8
+  pre POST /health-coaching/$cds-hook
+
+  h4 Metadata
+  pre GET /health-coaching/$cds-hook-metadata
+
+  h3 Finrisk calculator
+
+  pre Content-Type: application/json+fhir; charset=utf-8
+  pre POST /finrisk-calculator/$cds-hook
+
+  h4 Metadata
+  pre GET /finrisk-calculator/$cds-hook-metadata
+
+  h2 Example requests
+
+  h3 1. Context resource bundle parameter
+  pre #{request1}
+
+  h3 2. Patient and FHIR server parameters
+  pre #{request2}
+
   h2 Debug mode
 
-  i e.g. POST /api/health-coaching?debug=true
+  i e.g. POST /health-coaching/$cds-hook?debug=true
   p Returns OperationOutcome resource if EBMeDS response has errors or warnings, otherwise returns the actual Parameters resource
 
   h3 Response example
 
   pre #{response}
-
-  h2 API Methods
-
-  i POST /api/health-coaching
-
-  p Content-Type: application/json; charset=utf-8
-
-  h3 Request example 1
-
-  pre #{request1}
-
-  h3 Request example 2
-
-  pre #{request2}

@@ -5,7 +5,7 @@
       "name": "activity",
       "valueCoding": {
         "system": "http://cds-hooks.smarthealthit.org/activity",
-        "code": "health-coaching"
+        "code": "patient-view"
       }
     },
     {

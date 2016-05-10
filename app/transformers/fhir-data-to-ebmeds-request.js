@@ -4,12 +4,12 @@ var System = require('../domain/ebmeds/System');
 
 var service = {
 
-    toEbmedsRequest: function(fhirData) {
+    toEbmedsRequest: function(fhirData, context) {
 
         var request = {
             "DSSRequest": {
                 "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions),
-                "System": System.create(fhirData.activityInstance, fhirData.user)
+                "System": System.create(fhirData.activityInstance, fhirData.user, context.language, context.nation)
             }
         };
 

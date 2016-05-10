@@ -1,6 +1,6 @@
 var System = {
 
-    create: function(activityInstance, user) {
+    create: function(activityInstance, user, language, nation) {
 
         return {
             "User": {
@@ -16,12 +16,12 @@ var System = {
                     "CodeSystemVersion": {}
                 },
                 "Language": {
-                    "CodeValue": "fi",
+                    "CodeValue": language,
                     "CodeSystem": "2.16.840.1.113883.6.99",
                     "CodeSystemVersion": {}
                 },
                 "Nation": {
-                    "CodeValue": "fi",
+                    "CodeValue": nation,
                     "CodeSystem": "ISO 3166-1",
                     "CodeSystemVersion": {}
                 }
