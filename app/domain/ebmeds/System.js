@@ -1,6 +1,10 @@
+var moment = require('moment');
+
 var System = {
 
     create: function(activityInstance, user, language, nation) {
+
+        var now = moment();
 
         return {
             "User": {
@@ -28,7 +32,11 @@ var System = {
             },
             "Application": {
                 "QueryID": activityInstance,
-                "FeedbackType": "S"
+                "FeedbackType": "S",
+                "CheckMoment": {
+                    "CheckDate": now.format('YYYY-MM-DD'),
+                    "CheckTime": now.format('HH:mm:ss')
+                }
             }
         };
     }
