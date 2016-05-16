@@ -25,14 +25,7 @@ var Patient = {
                 }
             },
             "Risks": {
-                "DrugsToAvoid": {},
-                "Smoking": SmokingStatus.parse(observations),
-                "Pregnancy": {
-                    "Pregnant": "0"
-                },
-                "Lactation": {
-                    "Lactating": "0"
-                }
+                "Smoking": SmokingStatus.parse(observations)
             },
             "Problems": {
                 "Diagnoses": {
