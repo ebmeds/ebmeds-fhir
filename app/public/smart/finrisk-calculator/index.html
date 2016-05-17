@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <script src="https://rawgithub.com/dchester/jsonpath/master/jsonpath.min.js"></script>
     <script src="https://rawgithub.com/smart-on-fhir/client-js/master/dist/fhir-client.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
@@ -58,7 +57,15 @@
 
                             $('#loading').hide();
 
-                            var url = jsonpath.query(data, '$..parameter[*].part[?(@.name=="link")].part[?(@.name=="url")]')[0];
+                            var url = null;
+
+                            data.parameter.forEach(function(parameter) {
+                                parameter.part.forEach(function(part) {
+                                    if (part.name === "link" && part.part[0].valueString === "FINRISK calculator") {
+                                        url = part.part[1];
+                                    }
+                                });
+                            });
 
                             if (url) {
                                 $('<a>', { class: 'btn btn-primary btn-lg', role: 'button', text: 'FINRISK CALCULATOR', href: url.valueUri }).appendTo('#content');
