@@ -10,7 +10,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 app.use(cors());
-app.use(bodyParser.json({ type: 'application/*' }));
+app.use(bodyParser.json({ type: 'application/*', limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./controllers'));
