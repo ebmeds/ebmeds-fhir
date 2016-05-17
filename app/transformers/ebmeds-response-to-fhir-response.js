@@ -42,15 +42,22 @@ var service = {
 
         reminders.forEach(function(reminder) {
             cards.push(Card.create({
-                // FIXME Reminder tekstin valintalogiikka
-                summary: reminder.ReminderShort[0] ? reminder.ReminderShort[0] : reminder.ReminderPatient[0],
-                detail: reminder.ReminderLong[0] ? reminder.ReminderLong[0] : reminder.ReminderPatient[0],
+                summary: service._getReminderText(reminder, "ReminderShort"),
+                detail: service._getReminderText(reminder, "ReminderLong"),
                 sourceLabel: reminder.ScriptID[0],
                 sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=fi",
                 indicator: service._mapReminderLevel(reminder.ReminderLevel[0]),
                 links: []
             }));
         });
+    },
+
+    _getReminderText: function(reminder, property) {
+
+        var rm = reminder[property][0];
+
+        // Reminder object text if object, plain text, or fallback
+        return rm._ ? rm._ : rm ? rm : reminder.ReminderPatient[0];
     },
 
     _addGuideLink: function(ebmedsResponse, cards) {
