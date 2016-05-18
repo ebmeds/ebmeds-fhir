@@ -10,7 +10,7 @@ var System = {
             "User": {
                 "HealthCareRole": user.startsWith("Patient") ? "Citizen" : "Physician",
                 "HealthCareOrganization": {
-                    "CodeValue": {},
+                    "CodeValue": "fhirdemo",
                     "CodeSystem": {},
                     "CodeSystemVersion": {}
                 },
