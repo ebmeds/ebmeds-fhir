@@ -29,21 +29,21 @@ var service = {
 
         var cards = [];
 
-        service._addReminders(ebmedsResponse, cards);
+        service._addReminders(ebmedsResponse, cards, context);
         service._addGuideLink(ebmedsResponse, cards);
         service._addFinriskLink(ebmedsResponse, cards);
 
         return Parameters.create(cards);
     },
 
-    _addReminders: function(ebmedsResponse, cards) {
+    _addReminders: function(ebmedsResponse, cards, context) {
 
         var reminders = jp.query(ebmedsResponse, '$..Reminders[*].Reminder[*]');
 
         reminders.forEach(function(reminder) {
             cards.push(Card.create({
-                summary: service._getReminderText(reminder, "ReminderShort"),
-                detail: service._getReminderText(reminder, "ReminderLong"),
+                summary: service._getReminderText(reminder, context.parameters.user.startsWith("Patient") ? "ReminderPatient" : "ReminderShort"),
+                detail: service._getReminderText(reminder, context.parameters.user.startsWith("Patient") ? "ReminderPatient" : "ReminderLong"),
                 sourceLabel: reminder.ScriptID[0],
                 sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=fi",
                 indicator: service._mapReminderLevel(reminder.ReminderLevel[0]),
@@ -52,12 +52,19 @@ var service = {
         });
     },
 
-    _getReminderText: function(reminder, property) {
+    _getReminderText: function(reminder, property, context) {
+
+        var text = service._parseReminderText(reminder, property);
+
+        return text ? text : null;
+    },
+
+    _parseReminderText: function(reminder, property) {
 
         var rm = reminder[property][0];
 
-        // Reminder object text if object, plain text, or fallback
-        return rm._ ? rm._ : rm ? rm : reminder.ReminderPatient[0];
+        // Reminder is object or plain string
+        return rm && rm._ ? rm._ : rm ? rm : null;
     },
 
     _getReminderLinks: function(reminder) {

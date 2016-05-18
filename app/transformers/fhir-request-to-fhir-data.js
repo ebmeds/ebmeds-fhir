@@ -4,18 +4,18 @@ var Promise = require('bluebird');
 
 var service = {
 
-    transform: function(fhirRequest) {
+    transform: function(fhirRequest, context) {
 
-        var parameters = service._getParameters(fhirRequest);
+        context.parameters = service._getParameters(fhirRequest);
 
         return Promise.all([
-            service._getPatient(parameters),
-            service._getResources("Observation", parameters),
-            service._getResources("Condition", parameters)])
+            service._getPatient(context.parameters),
+            service._getResources("Observation", context.parameters),
+            service._getResources("Condition", context.parameters)])
             .spread(function(patient, observations, conditions) {
             return {
-                activityInstance: parameters.activityInstance,
-                user: parameters.user,
+                activityInstance: context.parameters.activityInstance,
+                user: context.parameters.user,
                 patient: patient,
                 observations: observations,
                 conditions: conditions
