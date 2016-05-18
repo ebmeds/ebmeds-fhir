@@ -47,7 +47,7 @@ var service = {
                 sourceLabel: reminder.ScriptID[0],
                 sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=fi",
                 indicator: service._mapReminderLevel(reminder.ReminderLevel[0]),
-                links: []
+                links: service._getReminderLinks(reminder)
             }));
         });
     },
@@ -58,6 +58,23 @@ var service = {
 
         // Reminder object text if object, plain text, or fallback
         return rm._ ? rm._ : rm ? rm : reminder.ReminderPatient[0];
+    },
+
+    _getReminderLinks: function(reminder) {
+
+        return ['ReminderShort', 'ReminderLong', 'ReminderPatient'].reduce(function(links, reminderType) {
+
+            var rm = reminder[reminderType][0];
+
+            if (rm.a) {
+                rm.a.forEach(function(link) {
+                    links.push({ label: link._, url: link.$.href });
+                });
+            }
+
+            return links;
+
+        }, []);
     },
 
     _addGuideLink: function(ebmedsResponse, cards) {
