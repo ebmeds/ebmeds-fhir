@@ -1,6 +1,7 @@
 var express = require('express');
-var path = require('path');
+var config = require('config');
 var cors = require('cors');
+var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 
@@ -16,3 +17,7 @@ app.use(require('./controllers'));
 process.env.NODE_ENV === "production" ?
     require('./production-configure')(app) :
     require('./development-configure')(app); // jshint ignore:line
+
+app.listen(config.get('server.port'), function() {
+    console.log('Express server listening on port ' + config.get('server.port'));
+});
