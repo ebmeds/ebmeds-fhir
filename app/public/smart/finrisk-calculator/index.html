@@ -68,7 +68,7 @@
                             });
 
                             if (url) {
-                                $('<a>', { class: 'btn btn-primary btn-lg', role: 'button', text: 'FINRISK CALCULATOR', href: url.valueUri }).appendTo('#content');
+                                window.location.replace(url.valueUri);
                             } else {
                                 $('#errorMessage').text("Insufficient patient data for Finrisk calculator");
                                 $('#error').show();
