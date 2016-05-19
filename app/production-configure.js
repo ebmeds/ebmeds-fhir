@@ -1,28 +1,23 @@
 var fs = require('fs');
 var https = require('https');
-var config = require('config');
 var winston = require('winston');
+var config = require('config');
 var OperationOutcome = require('./domain/fhir/OperationOutcome');
 
 module.exports = function(app) {
 
-    var logger = new winston.Logger({
-        transports: [
-            new winston.transports.File({
-                name: "errorLogFile",
-                filename: 'error.log',
-                level: 'error',
-                humanReadableUnhandledException: true,
-                handleExceptions: true,
-                json: false
-            })
-        ]
-    });
+    app.use(require('./middleware/error-logger')({ transports: [
+        new winston.transports.File({
+            name: "errorFileLog",
+            filename: "error.log",
+            level: 'error',
+            humanReadableUnhandledException: true,
+            handleExceptions: true,
+            json: false
+        })
+    ]}));
 
-    app.use(function(err, req, res, next) {
-        logger.error(err);
-        res.status(500).json(OperationOutcome.create([{ severity: "fatal", code: "exception", diagnostics: err.message }]));
-    });
+    app.use(require('./middleware/error-response')({ stacktrace: false }));
 
     var server = config.get('server');
 
