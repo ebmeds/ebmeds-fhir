@@ -29,9 +29,9 @@ var service = {
 
         var cards = [];
 
-        service._addReminders(ebmedsResponse, cards, context);
-        service._addGuideLink(ebmedsResponse, cards);
-        service._addFinriskLink(ebmedsResponse, cards);
+        if (context.cards.indexOf("reminders") > -1) { service._addReminders(ebmedsResponse, cards, context); }
+        if (context.cards.indexOf("guidelink") > -1) { service._addGuideLink(ebmedsResponse, cards); }
+        if (context.cards.indexOf("finrisklink") > -1) { service._addFinriskLink(ebmedsResponse, cards); }
 
         return Parameters.create(cards);
     },
@@ -52,7 +52,7 @@ var service = {
         });
     },
 
-    _getReminderText: function(reminder, property, context) {
+    _getReminderText: function(reminder, property) {
 
         var text = service._parseReminderText(reminder, property);
 
