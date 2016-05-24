@@ -45,7 +45,7 @@ var service = {
                 summary: service._getReminderText(reminder, context.parameters.user.startsWith("Patient") ? "ReminderPatient" : "ReminderShort"),
                 detail: service._getReminderText(reminder, context.parameters.user.startsWith("Patient") ? "ReminderPatient" : "ReminderLong"),
                 sourceLabel: reminder.ScriptID[0],
-                sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=fi",
+                sourceUrl: "http://www.ebmeds.org/web/guest/scripts?id=" + reminder.ScriptID[0] + "&lang=" + context.language,
                 indicator: service._mapReminderLevel(reminder.ReminderLevel[0]),
                 links: service._getReminderLinks(reminder)
             }));
