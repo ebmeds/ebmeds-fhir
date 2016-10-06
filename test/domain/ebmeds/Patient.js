@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var Patient = require("../../../app/domain/ebmeds/Patient");
+var Patient = require("../../../app/domain/ebmeds/request/Patient");
 
 describe("Patient", function() {
 

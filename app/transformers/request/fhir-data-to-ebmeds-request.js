@@ -1,6 +1,6 @@
 var xml2js = require('xml2js');
-var Patient = require('../domain/ebmeds/Patient');
-var System = require('../domain/ebmeds/System');
+var Patient = require('../../domain/ebmeds/request/Patient');
+var System = require('../../domain/ebmeds/request/System');
 
 var service = {
 

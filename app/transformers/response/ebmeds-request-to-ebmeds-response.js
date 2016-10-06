@@ -1,6 +1,6 @@
 var Promise = require('bluebird');
 var xml2js = require('xml2js');
-var ebmedsClient = require('../client/ebmeds-client.js');
+var ebmedsClient = require('../../client/ebmeds-client.js');
 
 var service = {
 

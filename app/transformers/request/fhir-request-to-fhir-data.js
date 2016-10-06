@@ -5,9 +5,7 @@ var Promise = require('bluebird');
 var service = {
 
     transform: function(fhirRequest, context) {
-
-        context.parameters = service._getParameters(fhirRequest);
-
+        
         return Promise.all([
             service._getPatient(context.parameters),
             service._getResources("Observation", context.parameters),
@@ -21,21 +19,6 @@ var service = {
                 conditions: conditions
             };
         });
-    },
-
-    _getParameters: function(fhirRequest) {
-        return {
-            activityInstance: service._getParameter(fhirRequest, "activityInstance", "valueString"),
-            user: service._getParameter(fhirRequest, "user", "valueString"),
-            context: service._getParameter(fhirRequest, "context", "resource"),
-            patient: service._getParameter(fhirRequest, "patient", "valueId"),
-            fhirServer: service._getParameter(fhirRequest, "fhirServer", "valueUri")
-        };
-    },
-
-    _getParameter: function(fhirRequest, name, property) {
-        var params = jp.query(fhirRequest, '$..parameter[?(@.name=="' + name + '")]');
-        return params.length === 0 ? null : params[0][property];
     },
 
     _getPatient: function(parameters) {
