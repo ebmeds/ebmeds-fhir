@@ -1,11 +1,12 @@
 var moment = require('moment');
 var Measurement = require('./Measurement');
 var Diagnosis = require('./Diagnosis');
+var Drug = require('./Drug');
 var SmokingStatus = require('./SmokingStatus');
 
 var Patient = {
     
-    create: function(patient, observations, conditions) {
+    create: function(patient, observations, conditions, medicationPrescriptions) {
 
         var parsedBirthDate = moment(patient.birthDate);
 
@@ -30,6 +31,11 @@ var Patient = {
             "Problems": {
                 "Diagnoses": {
                     "Diagnosis": Diagnosis.mapConditions(conditions, [])
+                }
+            },
+            "Interventions": {
+                "Medication": {
+                    "Drug": Drug.mapMedicationPrescriptions(medicationPrescriptions, [])
                 }
             }
         };

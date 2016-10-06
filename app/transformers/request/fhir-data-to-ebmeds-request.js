@@ -5,10 +5,10 @@ var System = require('../../domain/ebmeds/request/System');
 var service = {
 
     transform: function(fhirData, context) {
-
+        
         var request = {
             "DSSRequest": {
-                "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions),
+                "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions, fhirData.medicationPrescriptions),
                 "System": System.create(fhirData.activityInstance, fhirData.user, context.language, context.nation)
             }
         };

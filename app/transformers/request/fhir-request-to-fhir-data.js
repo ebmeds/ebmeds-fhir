@@ -5,18 +5,21 @@ var Promise = require('bluebird');
 var service = {
 
     transform: function(fhirRequest, context) {
-        
+
+        // FIXME Optimize resource queries
         return Promise.all([
             service._getPatient(context.parameters),
-            service._getResources("Observation", context.parameters),
-            service._getResources("Condition", context.parameters)])
-            .spread(function(patient, observations, conditions) {
+            service._getResources("Observation", context.parameters, { patient: context.parameters.patient }),
+            service._getResources("Condition", context.parameters, { patient: context.parameters.patient }),
+            service._getResources("MedicationPrescription", context.parameters, { patient: context.parameters.patient, status: "active" })])
+            .spread(function(patient, observations, conditions, medicationPrescriptions) {
             return {
                 activityInstance: context.parameters.activityInstance,
                 user: context.parameters.user,
                 patient: patient,
                 observations: observations,
-                conditions: conditions
+                conditions: conditions,
+                medicationPrescriptions: medicationPrescriptions
             };
         });
     },
@@ -41,7 +44,7 @@ var service = {
         throw new Error("Parameters missing context and patient/fhirServer");
     },
 
-    _getResources: function(resourceType, parameters) {
+    _getResources: function(resourceType, parameters, queryParameters) {
 
         if (parameters.context) {
 
@@ -53,7 +56,7 @@ var service = {
 
             var client = fhirClient({ baseUrl: parameters.fhirServer });
 
-            return client.search({ type: resourceType, query: { patient: parameters.patient } }).then(function(response) {
+            return client.search({ type: resourceType, query: queryParameters }).then(function(response) {
                 return jp.query(response.data, '$..entry[*].resource');
             });
         }
