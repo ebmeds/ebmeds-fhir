@@ -1,9 +1,14 @@
 var winston = require('winston');
 
-module.exports = function(options) {
+module.exports = function() {
 
     var logger = new winston.Logger({
-        transports: options.transports
+        transports: new winston.transports.Console({
+            level: 'error',
+            humanReadableUnhandledException: true,
+            handleExceptions: true,
+            json: false
+        })
     });
 
     return function(err, req, res, next) {
