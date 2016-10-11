@@ -1,15 +1,15 @@
 var Drug = {
     
     create: function(codeValue, codeSystem, strenght, strenghtUnit, administrationRouteValue, administrationRouteSystem,
-                     dailyDose, dosage, drugStatus, drugName) {
+                     dailyDose, dosage, drugStatus, drugName, startStamp, endStamp) {
         return {
             "CodeGroup": {
                 "CodeValue": codeValue,
                 "CodeSystem": codeSystem
             },
             "TimeStampsGroup": {
-                "StartStamp": "",
-                "EndStamp": "",
+                "StartStamp": startStamp,
+                "EndStamp": endStamp,
                 "PointStamp": ""
             },
             "Strenght": strenght,
@@ -33,23 +33,29 @@ var Drug = {
         };
     },
 
-    mapMedicationPrescriptions: function(medicationPrescriptions, drugs) {
-        medicationPrescriptions.map(function(medicationPrescription) {
+    mapMedicationOrders: function(medicationOrders, drugs) {
 
-            drugs.push(Drug.create(
-                medicationPrescription.contained[0].code.text,
-                "codeSystem",
-                medicationPrescription.dosageInstruction[0].doseQuantity.value,
-                medicationPrescription.dosageInstruction[0].doseQuantity.units,
-                medicationPrescription.dosageInstruction[0].route.text,
-                "administrationRouteSystem",
-                "dailyDose",
-                "dosage",
-                // 0 = On demand 1 = Continuous use
-                medicationPrescription.dosageInstruction.asNeededBoolean ? "0" : "1",
-                // FIXME Should be medication.name according to specs
-                medicationPrescription.medication.display
-            ));
+        medicationOrders.forEach(function(medicationOrder) {
+
+            if (medicationOrder.medicationCodeableConcept.coding) {
+
+                drugs.push(Drug.create(
+                    medicationOrder.medicationCodeableConcept.coding[0].code,
+                    medicationOrder.medicationCodeableConcept.coding[0].system,
+                    medicationOrder.dosageInstruction[0].doseQuantity.value,
+                    medicationOrder.dosageInstruction[0].doseQuantity.unit,
+                    medicationOrder.dosageInstruction[0].route.coding[0].code,
+                    medicationOrder.dosageInstruction[0].route.coding[0].system,
+                    "dailyDose",
+                    "dosage",
+                    // 0 = On demand 1 = Continuous use
+                    (medicationOrder.dosageInstruction.asNeededBoolean || medicationOrder.dosageInstruction.asNeededCodeableConcept) ? "0" : "1",
+                    medicationOrder.medicationCodeableConcept.coding[0].display ?
+                        medicationOrder.medicationCodeableConcept.coding[0].display : medicationOrder.medicationCodeableConcept.text,
+                    medicationOrder.dateWritten,
+                    medicationOrder.dateEnded
+                ));
+            }
         });
 
         return drugs;

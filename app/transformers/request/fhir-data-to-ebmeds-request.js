@@ -8,7 +8,7 @@ var service = {
         
         var request = {
             "DSSRequest": {
-                "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions, fhirData.medicationPrescriptions),
+                "Patient": Patient.create(fhirData.patient, fhirData.observations, fhirData.conditions, fhirData.medicationOrders),
                 "System": System.create(fhirData.activityInstance, fhirData.user, context.language, context.nation)
             }
         };

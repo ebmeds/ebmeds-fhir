@@ -11,15 +11,15 @@ var service = {
             service._getPatient(context.parameters),
             service._getResources("Observation", context.parameters, { patient: context.parameters.patient }),
             service._getResources("Condition", context.parameters, { patient: context.parameters.patient }),
-            service._getResources("MedicationPrescription", context.parameters, { patient: context.parameters.patient, status: "active" })])
-            .spread(function(patient, observations, conditions, medicationPrescriptions) {
+            service._getResources("MedicationOrder", context.parameters, { patient: context.parameters.patient, status: "active" })])
+            .spread(function(patient, observations, conditions, medicationOrders) {
             return {
                 activityInstance: context.parameters.activityInstance,
                 user: context.parameters.user,
                 patient: patient,
                 observations: observations,
                 conditions: conditions,
-                medicationPrescriptions: medicationPrescriptions
+                medicationOrders: medicationOrders
             };
         });
     },

@@ -6,7 +6,7 @@ var SmokingStatus = require('./SmokingStatus');
 
 var Patient = {
     
-    create: function(patient, observations, conditions, medicationPrescriptions) {
+    create: function(patient, observations, conditions, medicationOrder) {
 
         var parsedBirthDate = moment(patient.birthDate);
 
@@ -35,7 +35,7 @@ var Patient = {
             },
             "Interventions": {
                 "Medication": {
-                    "Drug": Drug.mapMedicationPrescriptions(medicationPrescriptions, [])
+                    "Drug": Drug.mapMedicationOrders(medicationOrder, [])
                 }
             }
         };
