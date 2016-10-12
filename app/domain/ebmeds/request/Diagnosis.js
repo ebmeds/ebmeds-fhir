@@ -5,7 +5,6 @@ var Diagnosis = {
         return {
             "CodeValue": codeValue,
             "CodeSystem": codeSystem,
-            "CodeSystemVersion": {},
             "StartStamp": {
                 "StartDate": startDate
             },
@@ -16,8 +15,7 @@ var Diagnosis = {
     mapCondition: function(condition) {
         return Diagnosis.create(
             condition.code.coding[0].code,
-            // FIXME System mappings?
-            "2.16.840.1.113883.6.2",
+            condition.code.coding[0].system,
             condition.dateRecorded,
             condition.code.coding[0].display);
     },

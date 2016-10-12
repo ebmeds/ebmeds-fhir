@@ -5,9 +5,10 @@ describe("Measurement", function() {
 
     it("create succeeds with date and time", function() {
 
-        var actual = Measurement.create("code", "2016-06-19T07:30:00+03:00", "value", "unit", "name");
+        var actual = Measurement.create("code", "system", "2016-06-19T07:30:00+03:00", "value", "unit", "name");
 
         expect("code").to.equal(actual.CodeValue);
+        expect("system").to.equal(actual.CodeSystem);
         expect("2016-06-19").to.equal(actual.PointStamp.PointDate);
         expect("07:30:00").to.equal(actual.PointStamp.PointTime);
         expect("value").to.equal(actual.Result.Value);
@@ -17,7 +18,7 @@ describe("Measurement", function() {
 
     it("create succeeds with date only", function() {
 
-        var actual = Measurement.create("code", "2016-06-19", "value", "unit", "name");
+        var actual = Measurement.create("code", "system", "2016-06-19", "value", "unit", "name");
 
         expect("2016-06-19").to.equal(actual.PointStamp.PointDate);
         expect("00:00:00").to.equal(actual.PointStamp.PointTime);
@@ -51,7 +52,7 @@ describe("Measurement", function() {
             }
         };
 
-        var expected = Measurement.create("code", "2016-06-19T07:30:00+03:00", "value", "unit", "name");
+        var expected = Measurement.create("code", "http://loinc.org", "2016-06-19T07:30:00+03:00", "value", "unit", "name");
         var actual = Measurement.mapObservation(observation.resource);
 
         expect(JSON.stringify(expected)).to.equal(JSON.stringify(actual));

@@ -2,13 +2,13 @@ var moment = require('moment');
 
 var Measurement = {
     
-    create: function(code, date, value, unit, name) {
+    create: function(code, system, date, value, unit, name) {
 
         var parsedDate = moment(date);
 
         return {
             "CodeValue": code,
-            "CodeSystem": "2.16.840.1.113883.6.1",
+            "CodeSystem": system,
             "PointStamp": {
                 "PointDate": parsedDate.format("YYYY-MM-DD"),
                 "PointTime": parsedDate.format("HH:mm:ss")
@@ -24,6 +24,7 @@ var Measurement = {
     mapObservation: function(observation, parent) {
         return Measurement.create(
             observation.code.coding[0].code,
+            observation.code.coding[0].system,
             observation.effectiveDateTime ? observation.effectiveDateTime : parent ? parent.effectiveDateTime : null,
             observation.valueQuantity.value,
             observation.valueQuantity.unit,
