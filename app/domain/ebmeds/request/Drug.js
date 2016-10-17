@@ -1,16 +1,24 @@
+var moment = require('moment');
+
 var Drug = {
     
-    create: function(codeValue, codeSystem, strenght, strenghtUnit, administrationRouteValue, administrationRouteSystem,
-                     dailyDose, dosage, drugStatus, drugName, startStamp, endStamp) {
+    create: function(codeValue, codeSystem, strenght, strenghtUnit,
+                     administrationRouteValue, administrationRouteSystem,
+                     drugStatus, drugName, startStamp, endStamp) {
+
+        var startDate = startStamp ? moment(startStamp) : null;
+        var endDate = endStamp ? moment(endStamp) : null;
+
         return {
-            "CodeGroup": {
-                "CodeValue": codeValue,
-                "CodeSystem": codeSystem
+            "CodeValue": codeValue,
+            "CodeSystem": codeSystem,
+            "StartStamp": {
+                "StartDate": startDate ? startDate.format("YYYY-MM-DD") : null,
+                "StartTime": startDate ? startDate.format("HH:mm:ss") : null
             },
-            "TimeStampsGroup": {
-                "StartStamp": startStamp,
-                "EndStamp": endStamp,
-                "PointStamp": ""
+            "EndStamp": {
+                "EndDate": endDate ? endDate.format("YYYY-MM-DD") : null,
+                "EndTime": endDate ? endDate.format("HH:mm:ss") : null
             },
             "Strenght": strenght,
             "StrenghtUnit": strenghtUnit,
@@ -18,16 +26,8 @@ var Drug = {
                 "CodeValue": administrationRouteValue,
                 "CodeSystem": administrationRouteSystem
             },
-            "DailyDose": dailyDose,
-            "Dosage": dosage,
-            "LastPrescription": {
-                "TimeStampsGroup": {
-                    "StartStamp": "",
-                    "EndStamp": "",
-                    "PointStamp": ""
-                },
-                "PackageAmount": ""
-            },
+            "DailyDose": "",
+            "Dosage": "",
             "DrugStatus": drugStatus,
             "DrugName": drugName
         };
@@ -46,8 +46,6 @@ var Drug = {
                     medicationOrder.dosageInstruction[0].doseQuantity.unit,
                     medicationOrder.dosageInstruction[0].route.coding[0].code,
                     medicationOrder.dosageInstruction[0].route.coding[0].system,
-                    "dailyDose",
-                    "dosage",
                     // 0 = On demand 1 = Continuous use
                     (medicationOrder.dosageInstruction.asNeededBoolean || medicationOrder.dosageInstruction.asNeededCodeableConcept) ? "0" : "1",
                     medicationOrder.medicationCodeableConcept.coding[0].display ?
