@@ -26,8 +26,8 @@ var Measurement = {
             observation.code.coding[0].code,
             observation.code.coding[0].system,
             observation.effectiveDateTime ? observation.effectiveDateTime : parent ? parent.effectiveDateTime : null,
-            observation.valueQuantity.value,
-            observation.valueQuantity.unit,
+            observation.valueQuantity ? observation.valueQuantity.value : observation.valueString ? observation.valueString : null,
+            observation.valueQuantity ? observation.valueQuantity.unit : null,
             observation.code.coding[0].display);
     },
 
@@ -39,9 +39,8 @@ var Measurement = {
             if (observation.component) {
                 Measurement.mapObservations(observation.component, measurements, observation);
             }
-            // FIXME Quantity should not be mandatory
-            // Require code and quantity information for single observation, otherwise skip
-            if (observation.code && observation.code.coding && observation.valueQuantity) {
+
+            if (observation.code && observation.code.coding) {
                 measurements.push(Measurement.mapObservation(observation, parent));
             }
         });
