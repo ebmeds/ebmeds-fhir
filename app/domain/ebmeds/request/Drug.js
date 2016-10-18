@@ -42,8 +42,8 @@ var Drug = {
                 drugs.push(Drug.create(
                     medicationOrder.medicationCodeableConcept.coding[0].code,
                     medicationOrder.medicationCodeableConcept.coding[0].system,
-                    medicationOrder.dosageInstruction[0].doseQuantity.value,
-                    medicationOrder.dosageInstruction[0].doseQuantity.unit,
+                    medicationOrder.dosageInstruction[0].doseQuantity ? medicationOrder.dosageInstruction[0].doseQuantity.value : null,
+                    medicationOrder.dosageInstruction[0].doseQuantity ? medicationOrder.dosageInstruction[0].doseQuantity.unit : null,
                     medicationOrder.dosageInstruction[0].route.coding[0].code,
                     medicationOrder.dosageInstruction[0].route.coding[0].system,
                     // 0 = On demand 1 = Continuous use
