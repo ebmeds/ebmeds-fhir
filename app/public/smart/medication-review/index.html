@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://rawgithub.com/smart-on-fhir/client-js/master/dist/fhir-client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bluebird/latest/bluebird.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+<div style="padding: 25px;">
+    <p id="content"><img src="loading.gif" style="height: 20px; width: 200px;" id="loading" /></p>
+    <p style="display: none; padding: 20px;" class="bg-danger" id="error"><span id="errorMessage"></span></p>
+</div>
+<script type="text/javascript">
+
+    FHIR.oauth2.ready(function(smart){
+
+        Promise.all([smart.patient.read(),
+                     smart.userId ? smart.user.read() : null,
+                     smart.patient.api.fetchAll({type: "Observation"}),
+                     smart.patient.api.fetchAll({type: "Condition"})])
+                .spread(function(patient, user, observations, conditions) {
+
+                    var resources = [].concat(observations).concat(conditions);
+                    resources.push(patient);
+
+                    var request = {
+                        "resourceType": "Parameters",
+                        "parameter": [
+                            {
+                                "name": "activityInstance",
+                                "valueString": "565a1dd3-71b2-4f75-8f55-692fcaaccbf6f"
+                            },
+                            {
+                                "name": "user",
+                                "valueString": user ? user.resourceType + "/" + user.id : "Practitioner/unknown"
+                            },
+                            {
+                                "name": "context",
+                                "resource": {
+                                    "entry": resources.map(function(resource) {
+                                        return {
+                                            "resource": resource
+                                        }
+                                    })
+                                }
+                            }
+                        ]
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://fhir.ebmeds.org/finrisk-calculator/$cds-hook",
+                        data: JSON.stringify(request),
+                        success: function (data) {
+
+                            var url = null;
+
+                            data.parameter.forEach(function(parameter) {
+                                parameter.part.forEach(function(part) {
+                                    if (part.name === "link" && part.part[0].valueString === "FINRISK calculator") {
+                                        url = part.part[1];
+                                    }
+                                });
+                            });
+
+                            if (url) {
+                                window.location.replace(url.valueUri);
+                            } else {
+                                $('#errorMessage').text("Insufficient patient data for Finrisk calculator");
+                                $('#error').show();
+                            }
+                        },
+                        error: function (response) {
+                            $('#loading').hide();
+                            $('#errorMessage').text("Error loading data: " + JSON.stringify(response.responseJSON));
+                            $('#error').show();
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    });
+
+                }).catch(function(error) {
+                    $('#loading').hide();
+                    $('#errorMessage').text("Error loading data: " + error);
+                    $('#error').show();
+                });
+    });
+</script>
+</body>
+</html>

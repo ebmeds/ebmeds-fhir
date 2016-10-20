@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script src="https://rawgithub.com/smart-on-fhir/client-js/master/dist/fhir-client.js"></script>
+    <script>
+        FHIR.oauth2.authorize({
+            "client_id": "ddd8e450-f2fe-40e1-83d5-64289f45048c",
+            "scope":  "patient/Patient.read patient/Observation.read patient/Condition.read"
+        });
+    </script>
+</head>
+Loading...
+</html>
