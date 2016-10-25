@@ -21,6 +21,7 @@
     "fhir.js": "0.0.9",
     "jade": "*",
     "jsonpath": "0.2.2",
+    "lodash": "4.16.4",
     "moment": "2.13.0",
     "promise-pipe": "0.1.8",
     "request-promise": "2.0.1",

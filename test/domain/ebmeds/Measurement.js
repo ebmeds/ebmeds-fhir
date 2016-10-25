@@ -24,6 +24,74 @@ describe("Measurement", function() {
         expect("00:00:00").to.equal(actual.PointStamp.PointTime);
     });
 
+    it("loincOrFirstReturnsLoinc", function() {
+
+        var coding = [{
+            "system" : "http://snomed.info/sct",
+            "code" : "108252007",
+            "display" : "Laboratory procedure (procedure)"
+        }, {
+            "system" : "http://loinc.org",
+            "code" : "4537-7",
+            "display" : "ERYTHROCYTE SEDIMENTATION RATE:VEL:PT:BLD:QN:WESTERGREN"
+        }
+        ];
+
+        var loinc = Measurement.loincOrFirst(coding);
+
+        expect(loinc).to.equal(coding[1]);
+    });
+
+    it("loincOrFirstReturnsFirst", function() {
+
+        var coding = [{
+            "system" : "http://snomed.info/sct",
+            "code" : "108252007",
+            "display" : "Laboratory procedure (procedure)"
+        }, {
+            "system" : "http://notloinc.org",
+            "code" : "xyz",
+            "display" : "displayname"
+        }
+        ];
+
+        var loinc = Measurement.loincOrFirst(coding);
+
+        expect(loinc).to.equal(coding[0]);
+    });
+
+    it("whitelistedCodesFiltersBlacklisted", function() {
+
+        var coding = [{
+            "system" : "http://snomed.info/sct",
+            "code" : "108252007",
+            "display" : "Laboratory procedure (procedure)"
+        }, {
+            "system" : "http://notloinc.org",
+            "code" : "xyz",
+            "display" : "displayname"
+        }
+        ];
+
+        var whitelisted = Measurement.whitelistedCodes(coding);
+
+        expect(whitelisted[0]).to.equal(coding[1]);
+    });
+
+    it("whitelistedCodesFallsBackToBlacklisted", function() {
+
+        var coding = [{
+            "system" : "http://snomed.info/sct",
+            "code" : "108252007",
+            "display" : "Laboratory procedure (procedure)"
+        }
+        ];
+
+        var whitelisted = Measurement.whitelistedCodes(coding);
+
+        expect(whitelisted[0]).to.equal(coding[0]);
+    });
+
     it("mapObservation succeeds", function() {
 
         var observation = {

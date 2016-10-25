@@ -1,4 +1,7 @@
+var _ = require('lodash');
 var moment = require('moment');
+
+var blacklistedCodes = ["108252007"];
 
 var Measurement = {
     
@@ -21,14 +24,29 @@ var Measurement = {
         };
     },
 
+    loincOrFirst: function(coding) {
+        var loinc = _.find(coding, { system: "http://loinc.org" });
+        return loinc ? loinc : coding[0];
+    },
+
+    whitelistedCodes: function(coding) {
+        var whitelistedCodes = _.filter(coding, function(code) {
+            return !_.includes(blacklistedCodes, code.code);
+        });
+        return whitelistedCodes.length > 0 ? whitelistedCodes : coding; // fallback
+    },
+
     mapObservation: function(observation, parent) {
+
+        var code = Measurement.loincOrFirst(Measurement.whitelistedCodes(observation.code.coding));
+
         return Measurement.create(
-            observation.code.coding[0].code,
-            observation.code.coding[0].system,
+            code.code,
+            code.system,
             observation.effectiveDateTime ? observation.effectiveDateTime : parent ? parent.effectiveDateTime : null,
             observation.valueQuantity ? observation.valueQuantity.value : observation.valueString ? observation.valueString : null,
             observation.valueQuantity ? observation.valueQuantity.unit : null,
-            observation.code.coding[0].display);
+            code.display);
     },
 
     mapObservations: function(observations, measurements, parent) {
