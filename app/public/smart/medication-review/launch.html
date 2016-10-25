@@ -5,8 +5,10 @@
     <script src="https://rawgithub.com/smart-on-fhir/client-js/master/dist/fhir-client.js"></script>
     <script>
         FHIR.oauth2.authorize({
-            "client_id": "ddd8e450-f2fe-40e1-83d5-64289f45048c",
-            "scope":  "patient/Patient.read patient/Observation.read patient/Condition.read"
+            "client_id": "7f847233-0dd1-4d0f-a332-5cfb73b6899d",
+            "scope":  "patient/Patient.read patient/Observation.read patient/Condition.read patient/MedicationOrder.read",
+            "aud": "https://fhir.sandboxcernerpowerchart.com/dstu2/",
+            "launch": "74730adb-e4b2-4f60-989e-4873abb57aec"
         });
     </script>
 </head>
