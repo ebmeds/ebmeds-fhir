@@ -20,8 +20,8 @@ var Drug = {
                 "EndDate": endDate ? endDate.format("YYYY-MM-DD") : null,
                 "EndTime": endDate ? endDate.format("HH:mm:ss") : null
             },
-            "Strenght": strenght,
-            "StrenghtUnit": strenghtUnit,
+            "Strength": strenght,
+            "StrengthUnit": strenghtUnit,
             "AdministrationRoute": {
                 "CodeValue": administrationRouteValue,
                 "CodeSystem": administrationRouteSystem
