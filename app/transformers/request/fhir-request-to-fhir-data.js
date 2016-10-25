@@ -1,13 +1,13 @@
 var fhirClient = require('fhir.js');
 var jp = require('jsonpath');
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 
 var service = {
 
     transform: function(fhirRequest, context) {
 
         // FIXME Optimize resource queries
-        return Promise.all([
+        return Bluebird.all([
             service._getPatient(context.parameters),
             service._getResources("Observation", context.parameters, { patient: context.parameters.patient }),
             service._getResources("Condition", context.parameters, { patient: context.parameters.patient }),
@@ -28,7 +28,7 @@ var service = {
 
         if (parameters.context) {
 
-            return new Promise(function(resolve, reject) {
+            return new Bluebird(function(resolve, reject) {
                 resolve(jp.query(parameters.context, '$..entry[?(@.resource.resourceType=="Patient")].resource')[0]);
             });
 
