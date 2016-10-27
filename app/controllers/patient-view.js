@@ -6,9 +6,9 @@ router.post('/\\$cds-hook', function(req, res, next) {
 
     var context = {
         requestParams: req.query || {},
-        language: "en-US",
-        nation: "US",
-        cards: ["reminders", "guidelink"]
+        language: "fi",
+        nation: "fi",
+        cards: ["reminders", "guidelink", "cmrlink"]
     };
 
     pipe.execute(req, res, next, context);

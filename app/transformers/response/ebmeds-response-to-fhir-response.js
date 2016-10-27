@@ -6,6 +6,7 @@ var Parameters = require('../../domain/fhir/Parameters');
 var Reminder = require('../../domain/ebmeds/response/Reminder');
 var GuidelineLink = require('../../domain/ebmeds/response/GuidelineLink');
 var FinriskLink = require('../../domain/ebmeds/response/FinriskLink');
+var CmrLink = require('../../domain/ebmeds/response/CmrLink');
 
 var service = {
 
@@ -34,12 +35,14 @@ var service = {
         var reminders = jp.query(ebmedsResponse, '$..Reminders[*].Reminder[*]');
         var links = jp.query(ebmedsResponse, '$..GuidelineLinks[*].GuidelineLink[*]');
         var finriskDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="calculatorFinrisk")]')[0];
+        var cmrDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="DSO-URL")]')[0];
 
         var cards = [];
 
         if (context.cards.indexOf("reminders") > -1) { cards.push(Reminder.toCards(reminders, context)); }
         if (context.cards.indexOf("guidelink") > -1 && links.length > 0) { cards.push(GuidelineLink.toCard(links)); }
         if (context.cards.indexOf("finrisklink") > -1 && finriskDataset) { cards.push(FinriskLink.toCard(finriskDataset)); }
+        if (context.cards.indexOf("cmrlink") > -1 && cmrDataset) { cards.push(CmrLink.toCard(cmrDataset)); }
 
         return Parameters.create(cards);
     }

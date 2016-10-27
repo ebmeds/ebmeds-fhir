@@ -19,10 +19,11 @@
         Promise.all([smart.patient.read(),
                      smart.userId ? smart.user.read() : null,
                      smart.patient.api.fetchAll({type: "Observation"}),
-                     smart.patient.api.fetchAll({type: "Condition"})])
-                .spread(function(patient, user, observations, conditions) {
+                     smart.patient.api.fetchAll({type: "Condition"}),
+                     smart.patient.api.fetchAll({type: "MedicationOrder"})])
+                .spread(function(patient, user, observations, conditions, medicationOrders) {
 
-                    var resources = [].concat(observations).concat(conditions);
+                    var resources = [].concat(observations).concat(conditions).concat(medicationOrders);
                     resources.push(patient);
 
                     var request = {
@@ -59,7 +60,7 @@
 
                             data.parameter.forEach(function(parameter) {
                                 parameter.part.forEach(function(part) {
-                                    if (part.name === "link" && part.part[0].valueString === "FINRISK calculator") {
+                                    if (part.name === "link" && part.part[0].valueString === "Comprehensive Medication Review") {
                                         url = part.part[1];
                                     }
                                 });
@@ -68,7 +69,7 @@
                             if (url) {
                                 window.location.replace(url.valueUri);
                             } else {
-                                $('#errorMessage').text("Insufficient patient data for Finrisk calculator");
+                                $('#errorMessage').text("Insufficient patient data for Comprehensive Medication Review");
                                 $('#error').show();
                             }
                         },
