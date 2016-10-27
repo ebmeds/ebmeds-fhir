@@ -46,7 +46,7 @@ var Measurement = {
             observation.effectiveDateTime ? observation.effectiveDateTime : parent ? parent.effectiveDateTime : null,
             observation.valueQuantity ? observation.valueQuantity.value : observation.valueString ? observation.valueString : null,
             observation.valueQuantity ? observation.valueQuantity.unit : null,
-            code.display);
+            observation.code.text ? observation.code.text : code.display);
     },
 
     mapObservations: function(observations, measurements, parent) {
