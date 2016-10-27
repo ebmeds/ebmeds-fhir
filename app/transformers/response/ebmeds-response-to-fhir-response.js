@@ -39,7 +39,7 @@ var service = {
 
         var cards = [];
 
-        if (context.cards.indexOf("reminders") > -1) { cards.push(Reminder.toCards(reminders, context)); }
+        if (context.cards.indexOf("reminders") > -1) { cards.concat(Reminder.toCards(reminders, context)); }
         if (context.cards.indexOf("guidelink") > -1 && links.length > 0) { cards.push(GuidelineLink.toCard(links)); }
         if (context.cards.indexOf("finrisklink") > -1 && finriskDataset) { cards.push(FinriskLink.toCard(finriskDataset)); }
         if (context.cards.indexOf("cmrlink") > -1 && cmrDataset) { cards.push(CmrLink.toCard(cmrDataset)); }
