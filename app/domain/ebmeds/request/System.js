@@ -32,10 +32,14 @@ var System = {
             },
             "Application": {
                 "QueryID": activityInstance,
+                "DSSVersion": "EBMeDS Basic Interface v1.21",
                 "FeedbackType": "S",
                 "CheckMoment": {
                     "CheckDate": now.format('YYYY-MM-DD'),
                     "CheckTime": now.format('HH:mm:ss')
+                },
+                "EventTypes": {
+                    "EventType": ["onOpenRecord"]
                 }
             }
         };
