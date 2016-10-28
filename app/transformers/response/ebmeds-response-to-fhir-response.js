@@ -35,7 +35,7 @@ var service = {
         var reminders = jp.query(ebmedsResponse, '$..Reminders[*].Reminder[*]');
         var links = jp.query(ebmedsResponse, '$..GuidelineLinks[*].GuidelineLink[*]');
         var finriskDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="calculatorFinrisk")]')[0];
-        var cmrDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="DSO-URL")]')[0];
+        var cmrDataset = jp.query(ebmedsResponse, '$..ExperimentalDataSet[?(@.DataSetName=="CMR-URL")]')[0];
 
         var cards = [];
 
