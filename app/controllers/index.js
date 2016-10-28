@@ -4,6 +4,7 @@ var router = express.Router();
 router.use('/health-coaching', require('./health-coaching'));
 router.use('/finrisk-calculator', require('./finrisk-calculator'));
 router.use('/patient-view', require('./patient-view'));
+router.use('/medication-review', require('./medication-review'));
 
 router.get('/', function(req, res) {
     res.render('index', {
