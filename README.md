@@ -1,4 +1,4 @@
-# EBMeDS FHIR
+# EBMeDS FHIR [DEPRECATED DEMO SOFTWARE]
 
 ### Installation
 
